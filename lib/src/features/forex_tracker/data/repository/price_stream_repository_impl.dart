@@ -1,4 +1,4 @@
-import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/price_stream_datasource.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/price_stream_datasource.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/price_stream_repository.dart';
 
 class PriceStreamRepositoryImpl implements PriceStreamRepository {

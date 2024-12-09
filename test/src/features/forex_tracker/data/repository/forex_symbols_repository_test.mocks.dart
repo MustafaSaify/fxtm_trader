@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/forex_symbols_datasource.dart'
+import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/forex_symbols_remote_datasource.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -22,12 +22,12 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [ForexSymbolDataSource].
+/// A class which mocks [ForexSymbolsRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockForexSymbolDataSource extends _i1.Mock
-    implements _i2.ForexSymbolsDataSource {
-  MockForexSymbolDataSource() {
+class MockForexSymbolsRemoteDataSource extends _i1.Mock
+    implements _i2.ForexSymbolsRemoteDataSource {
+  MockForexSymbolsRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 

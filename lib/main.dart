@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/price_list_screen.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/presentation/forex_list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PriceListScreen(),
+      home: const ForexListScreen(),
     );
   }
 }
