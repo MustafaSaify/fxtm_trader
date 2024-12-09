@@ -1,11 +1,11 @@
-import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/forex_symbol_datasource.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/forex_symbols_datasource.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_symbol.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/forex_symbols_repository.dart';
 
 class ForexSymbolsRepositoryImpl implements ForexSymbolsRepository {
-  final ForexSymbolDataSource _symbolDataSource;
+  final ForexSymbolsDataSource _symbolDataSource;
   ForexSymbolsRepositoryImpl({
-    required ForexSymbolDataSource symbolDataSource,
+    required ForexSymbolsDataSource symbolDataSource,
   }) : _symbolDataSource = symbolDataSource;
 
   @override
