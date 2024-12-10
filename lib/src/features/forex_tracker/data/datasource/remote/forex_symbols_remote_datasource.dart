@@ -2,7 +2,7 @@ import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/se
 import 'package:fxtm_trader/src/features/forex_tracker/data/models/forex_symbol_dto.dart';
 
 abstract class ForexSymbolsRemoteDataSource {
-  Future<List<dynamic>> getSymbols({required String exchange});
+  Future<List<ForexSymbolDto>> getSymbols({required String exchange});
 }
 
 class ForexSymbolsRemoteDataSourceImpl implements ForexSymbolsRemoteDataSource {

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:fxtm_trader/src/core/network_constants.dart';
+import 'package:fxtm_trader/src/core/constants/network_constants.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/data/models/forex_symbol_dto.dart';
 import 'package:retrofit/retrofit.dart';
 

@@ -13,7 +13,8 @@ class ForexSymbolsRepositoryImpl implements ForexSymbolsRepository {
     final symbols = await _remoteDataSource.getSymbols(exchange: exchange);
     return symbols.map((symbolDto) => ForexSymbol(
         symbol: symbolDto.symbol,
-        name: symbolDto.name,
+        displaySymbol: symbolDto.displaySymbol,
+        description: symbolDto.description
       )).toList();
   }
 }

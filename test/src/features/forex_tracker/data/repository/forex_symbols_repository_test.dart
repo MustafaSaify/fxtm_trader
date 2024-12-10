@@ -5,6 +5,7 @@ import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/forex_s
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../datasource/mock_data/forex_symbols_remote_datasourse_mocks.dart';
 import 'forex_symbols_repository_test.mocks.dart';
 import 'mock_data/forex_symbols_repository_mocks.dart';
 
@@ -25,7 +26,7 @@ void main() {
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbols;
       when(mockRemoteDataSource.getSymbols(exchange: exchange)).thenAnswer((_) async {
-        return mockedForexSymbols;
+        return mockedForexSymbolsDtos;
       });
 
       // when
