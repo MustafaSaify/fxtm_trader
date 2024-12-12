@@ -6,9 +6,7 @@ import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/p
 class ForexPriceBloc extends Bloc<ForexPriceEvent, ForexPriceState> {
   final ForexPriceUsecase forexPriceUsecase;
 
-  ForexPriceBloc({
-    required this.forexPriceUsecase,
-  }) : super(PriceLoading()) {
+  ForexPriceBloc(this.forexPriceUsecase) : super(PriceLoading()) {
     on<SubscribeToPrice>(_subscribeToPrice);
   }
 
@@ -20,7 +18,7 @@ class ForexPriceBloc extends Bloc<ForexPriceEvent, ForexPriceState> {
     try {
       await for (final forexPrice
           in forexPriceUsecase.subscribeToSymbol(event.symbol)) {
-        if (forexPrice != null) {
+        if (forexPrice != null && forexPrice.symbol == event.symbol) {
           emit(PriceLoaded(price: forexPrice.price.toStringAsFixed(4)));
         }
       }

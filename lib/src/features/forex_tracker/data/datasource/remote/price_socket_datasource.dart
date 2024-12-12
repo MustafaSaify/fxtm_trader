@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:fxtm_trader/src/core/network/network_config.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 abstract class PriceSocketDataSource {
@@ -17,23 +18,16 @@ abstract class PriceSocketDataSource {
 }
 
 class PriceSocketDataSourceImpl implements PriceSocketDataSource {
-  final String baseUrl;
-  final String token;
 
   WebSocketChannel? _channel;
   final _controller = StreamController<Map<String, dynamic>>.broadcast();
   bool _isConnected = false;
 
-  PriceSocketDataSourceImpl({
-    required this.baseUrl,
-    required this.token,
-  });
-
   @override
   Future<void> connect() async {
     if (_isConnected) return;
 
-    final uri = _buildWebSocketUri(baseUrl, token);
+    final uri = _buildWebSocketUri();
 
     try {
       _channel = WebSocketChannel.connect(uri);
@@ -85,8 +79,9 @@ class PriceSocketDataSourceImpl implements PriceSocketDataSource {
     _controller.close();
   }
 
-  Uri _buildWebSocketUri(String baseUrl, String token) {
-    return Uri.parse(baseUrl).replace(queryParameters: {'token': token});
+  Uri _buildWebSocketUri() {
+    return Uri.parse(NetworkConfig.webSocketUrl)
+              .replace(queryParameters: {'token': NetworkConfig.apiToken});
   }
 
   Map<String, dynamic>? _parseMessage(dynamic message) {

@@ -10,6 +10,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case forexList:
+        setupForex();
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
@@ -17,13 +18,14 @@ class Router {
                 create: (BuildContext context) => ForexListProvider().initForexListBloc(),
               ),
               BlocProvider<ForexPriceBloc>(
-                create: (BuildContext context) => ForexPriceProvider().initForexPriceBloc(),
+                create: (BuildContext context) => getIt<ForexPriceBloc>() //ForexPriceProvider().initForexPriceBloc(),
               ),
             ],
             child: const ForexListScreen(),
           ),
         );
       case forexList:
+        setupForex();
         return MaterialPageRoute(
           builder: (_) => BlocProvider<ForexListScreenBloc>(
             create: (BuildContext context) => ForexListProvider().initForexListBloc(),

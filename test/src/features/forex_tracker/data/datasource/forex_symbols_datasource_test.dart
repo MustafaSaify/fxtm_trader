@@ -1,21 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fxtm_trader/src/core/network/network_client.dart';
+import 'package:fxtm_trader/src/core/network/network_response.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/forex_symbols_remote_datasource.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/services/forex_symbols_service.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_symbol.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'forex_symbols_datasource_test.mocks.dart';
+import '../repository/mock_data/forex_symbols_repository_mocks.dart';
 import 'mock_data/forex_symbols_remote_datasourse_mocks.dart';
 
-@GenerateMocks([ForexSymbolsService])
 void main() {
   late ForexSymbolsRemoteDataSource sut;
-  late ForexSymbolsService mockForexSymbolsService;
-  const apiToken = '1234567890';
+  late NetworkClient networkClientMock;
 
   setUp(() {
-    mockForexSymbolsService = MockForexSymbolsService();
-    sut = ForexSymbolsRemoteDataSourceImpl(forexSymbolsService: mockForexSymbolsService, apiToken: apiToken);
+    networkClientMock = NetworkclientMock();
+    sut = ForexSymbolsRemoteDataSourceImpl(networkClient: networkClientMock);
   });
 
   group('Test ForexSymbolsDataSourceImpl', () {
@@ -23,9 +22,14 @@ void main() {
       // given
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbolsDtos;
-      when(mockForexSymbolsService.getSymbols(exchange, apiToken)).thenAnswer((_) async {
-        return mockedForexSymbolsDtos;
-      });
+      when(
+        () => networkClientMock.get(
+          path: any(named: 'path'), 
+          queryParameters: any(named: 'queryParameters'), 
+          fromJson: any(named: 'fromJson')<List<ForexSymbol>)
+      ).thenAnswer((_) 
+        async => NetworkResponse(data: mockedForexSymbols)
+      );
 
       // when
       final result = await sut.getSymbols(exchange: exchange);
@@ -38,8 +42,8 @@ void main() {
       // given
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbolsDtos;
-      when(mockForexSymbolsService.getSymbols(exchange, apiToken)).thenAnswer((_) async {
-        return mockedForexSymbolsDtos;
+      when(() => networkClientMock.get(path: any())).thenAnswer((_) async {
+        return NetworkResponse(data: null, statusCode: '400');
       });
 
       // when
@@ -50,3 +54,5 @@ void main() {
     });
   });
 }
+
+class NetworkclientMock extends Mock implements NetworkClient {}

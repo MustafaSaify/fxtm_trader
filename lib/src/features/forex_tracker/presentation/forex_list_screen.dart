@@ -18,8 +18,8 @@ class _ForexListScreenState extends State<ForexListScreen> {
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<ForexListScreenBloc>(context);
-    _dispatch(const LoadForexSymbols());
+    _bloc = context.read<ForexListScreenBloc>();
+    _dispatch(LoadForexSymbols(exchange: _Constants.defaultExchange));
   }
 
   void _dispatch(LoadForexSymbols event) => _bloc.add(event);
@@ -46,11 +46,13 @@ class _ForexListScreenState extends State<ForexListScreen> {
 
   Widget _buildState(ForexState state) {
     if (state is ForexLoading) {
-      return const _ForexListLoadingWidget(key: Key('forex_loading_widget'));
+      return const _ForexListLoadingWidget(key: ForexListKeys.loading);
     } else if (state is ForexLoaded) {
-      return ForexListContentWidget(displayItems: state.symbols);
+      return ForexListContentWidget(key: ForexListKeys.loaded, displayItems: state.displayItems);
+    } else if (state is ForexError) {
+      return _ForexListErrorWidget(key: ForexListKeys.error, error: state.error);
     }
-    return const _ForexListLoadingWidget(key: Key('forex_loading_widget'));
+    return const _ForexListErrorWidget(key: ForexListKeys.error);
   }
 }
 
@@ -65,4 +67,29 @@ class _ForexListLoadingWidget extends StatelessWidget {
       child: CircularProgressIndicator()
     );
   }
+}
+
+class _ForexListErrorWidget extends StatelessWidget {
+
+  final String error;
+
+  const _ForexListErrorWidget({required super.key, this.error = _Constants.defaultErrorMessage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      key: key,
+      child: Text(error),
+    );
+  }
+}
+
+abstract class _Constants {
+  static const defaultExchange = 'oanda';
+  static const defaultErrorMessage = 'Error while fetching symbols.';
+}
+abstract class ForexListKeys {
+  static const loading = Key('forex_loading_key');
+  static const loaded = Key('forex_loaded_key');
+  static const error = Key('forex_error_key');
 }

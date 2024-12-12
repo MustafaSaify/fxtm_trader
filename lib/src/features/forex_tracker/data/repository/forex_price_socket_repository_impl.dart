@@ -6,7 +6,7 @@ class ForexPriceSocketRepositoryImpl implements ForexPriceSocketRepository {
 
   final PriceSocketDataSource _priceSocketDataSource;
 
-  ForexPriceSocketRepositoryImpl({required PriceSocketDataSource priceSocketDataSource}) : _priceSocketDataSource = priceSocketDataSource;
+  ForexPriceSocketRepositoryImpl(this._priceSocketDataSource);
 
   @override
   Stream<ForexPrice?> subscribeToSymbol(String symbol) async* {

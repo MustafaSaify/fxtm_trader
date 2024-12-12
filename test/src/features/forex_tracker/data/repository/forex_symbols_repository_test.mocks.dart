@@ -7,7 +7,7 @@ import 'dart:async' as _i3;
 
 import 'package:fxtm_trader/src/features/forex_tracker/data/datasource/remote/forex_symbols_remote_datasource.dart'
     as _i2;
-import 'package:fxtm_trader/src/features/forex_tracker/data/models/forex_symbol_dto.dart'
+import 'package:fxtm_trader/src/features/forex_tracker/data/models/forex_symbol_model.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -34,7 +34,7 @@ class MockForexSymbolsRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.ForexSymbolDto>> getSymbols(
+  _i3.Future<List<_i4.ForexSymbolModel>> getSymbols(
           {required String? exchange}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -42,7 +42,7 @@ class MockForexSymbolsRemoteDataSource extends _i1.Mock
           [],
           {#exchange: exchange},
         ),
-        returnValue:
-            _i3.Future<List<_i4.ForexSymbolDto>>.value(<_i4.ForexSymbolDto>[]),
-      ) as _i3.Future<List<_i4.ForexSymbolDto>>);
+        returnValue: _i3.Future<List<_i4.ForexSymbolModel>>.value(
+            <_i4.ForexSymbolModel>[]),
+      ) as _i3.Future<List<_i4.ForexSymbolModel>>);
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fxtm_trader/src/core/theme/dimens.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_symbol.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/di/forex_provider.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/forex_price_widget.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex_item_display_model.dart';
 
 class ForexListContentWidget extends StatelessWidget{
 
-  final List<ForexSymbol> displayItems;
+  final List<ForexItemDisplayModel> displayItems;
 
   const ForexListContentWidget({super.key, required this.displayItems});
 
@@ -14,65 +16,41 @@ class ForexListContentWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: displayItems.length,
-      itemBuilder: (context, index) {
-        final item = displayItems[index];
-        return ListTile(
-          title: Text(
-            item.symbol,
-            style: const TextStyle(
-              fontSize: Dimens.largeText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-            item.displaySymbol,
-            style: const TextStyle(fontSize: Dimens.large),
-          ),
-          trailing: SizedBox(
-            width: 100,
-            child: ForexPriceWidget(symbol: item.symbol),
-          ) 
-        );
-      },
+      itemBuilder: (context, index) => BlocProvider<ForexPriceBloc>(
+        create: (context) => getIt<ForexPriceBloc>(),
+        child: _ForexListItem(item: displayItems[index]),
+      ),
     );
   }
+}
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ListView.builder(
-  //     itemCount: displayItems.length,
-  //     itemBuilder: (context, index) {
-  //       final item = displayItems[index];
-  //       return Padding(
-  //         padding: const EdgeInsets.all(Dimens.small),
-  //         child: Row(
-  //           mainAxisSize: MainAxisSize.max,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: [
-  //             Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Text(
-  //                   item.symbol,
-  //                   style: const TextStyle(
-  //                     fontSize: Dimens.largeText,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //                 const SizedBox(height: Dimens.small),
-  //                 Text(
-  //                   item.displaySymbol,
-  //                   style: const TextStyle(fontSize: Dimens.large),
-  //                 ),
-  //               ],
-  //             ),
-  //             Expanded(
-  //               child: ForexPriceWidget(symbol: item.symbol)
-  //             )
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+class _ForexListItem extends StatelessWidget {
+  final ForexItemDisplayModel item;
+
+  const _ForexListItem({super.key, required this.item});
+  
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        item.displaySymbol,
+        style: const TextStyle(
+          fontSize: Dimens.largeText,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Text(
+        item.description,
+        style: const TextStyle(fontSize: Dimens.large),
+      ),
+      trailing: SizedBox(
+        width: _Constants.priceWidgetWidth,
+        child: ForexPriceWidget(symbol: item.symbol),
+      ) 
+    );
+  }  
+}
+
+abstract class _Constants {
+  static double priceWidgetWidth = 150;
 }

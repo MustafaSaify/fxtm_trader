@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fxtm_trader/src/routing/router.dart' as app_router;
 import 'package:fxtm_trader/src/routing/routes.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  // To load the .env file contents into dotenv..
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

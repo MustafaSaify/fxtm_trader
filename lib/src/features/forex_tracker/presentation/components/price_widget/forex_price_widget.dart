@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fxtm_trader/src/core/theme/dimens.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
@@ -21,9 +20,7 @@ class _ForexPriceWidgetState extends State<ForexPriceWidget> {
   @override
   void initState() {
     super.initState();
-
-    _bloc = BlocProvider.of<ForexPriceBloc>(context);
-
+    _bloc = context.read<ForexPriceBloc>();
     _dispatch(SubscribeToPrice(widget.symbol));
   }
 
@@ -48,38 +45,38 @@ class _ForexPriceWidgetState extends State<ForexPriceWidget> {
   }
 
   Widget _buildState(BuildContext context, ForexPriceState state) {
-    if (state is PriceLoading) {
-      return const Center(
-        child: SizedBox(
-          height: Dimens.large,
-          width: Dimens.large,
-          child: Center(
-            child: CircularProgressIndicator()
-          ),
-        ),
-      );
-    } else if (state is PriceLoaded) {
+    if (state is PriceLoaded) {
       return Text(
+        key: ForexPriceWidgetKeys.loaded,
         state.price,
         style: const TextStyle(
-          fontSize: Dimens.largeText,
+          fontSize: Dimens.large,
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.right,
       );
-    } else {
-      return const Text(
-        '-',
-        style: TextStyle(
+    } 
+    else {
+      return Text(
+        key: state is PriceLoading ? ForexPriceWidgetKeys.loading : ForexPriceWidgetKeys.error,
+        state is PriceLoading ? 'Loading..' : 'Error!!',
+        style: const TextStyle(
           fontSize: Dimens.large,
           fontWeight: FontWeight.bold,
         ),
+        textAlign: TextAlign.right,
       );
-    }
+    } 
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+}
+
+abstract class ForexPriceWidgetKeys {
+  static const loading = Key('forex_price_loading_key');
+  static const loaded = Key('forex_price_loaded_key');
+  static const error = Key('forex_price_error_key');
 }

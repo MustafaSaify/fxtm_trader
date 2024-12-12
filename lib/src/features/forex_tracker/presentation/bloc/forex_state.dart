@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_symbol.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex_item_display_model.dart';
 
 abstract class ForexState extends Equatable {}
 
@@ -12,12 +12,12 @@ class ForexLoading implements ForexState {
 }
 
 class ForexLoaded implements ForexState {
-  final List<ForexSymbol> symbols;
+  final List<ForexItemDisplayModel> displayItems;
 
-  ForexLoaded({required this.symbols});
+  ForexLoaded({required this.displayItems});
 
   @override
-  List<Object?> get props => [symbols];
+  List<Object?> get props => [displayItems];
 
   @override
   bool? get stringify => false;
