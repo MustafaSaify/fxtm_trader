@@ -18,7 +18,7 @@ class ForexListContentWidget extends StatelessWidget{
       itemCount: displayItems.length,
       itemBuilder: (context, index) => BlocProvider<ForexPriceBloc>(
         create: (context) => getIt<ForexPriceBloc>(),
-        child: _ForexListItem(item: displayItems[index]),
+        child: _ForexListItem(key: Key('forex_list_item_$index'), item: displayItems[index]),
       ),
     );
   }
@@ -45,7 +45,7 @@ class _ForexListItem extends StatelessWidget {
       ),
       trailing: SizedBox(
         width: _Constants.priceWidgetWidth,
-        child: ForexPriceWidget(symbol: item.symbol),
+        child: ForexPriceWidget(key: Key('forex_price_${item.symbol}'), symbol: item.symbol),
       ) 
     );
   }  

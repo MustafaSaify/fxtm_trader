@@ -12,7 +12,7 @@ void main() {
 
   setUp(() {
     forexPriceRepositoryMock = ForexPriceSocketRepositoryMock();
-    sut = ForexPriceUsecaseImpl(forexPriceRepositoryMock);
+    sut = ForexPriceUsecaseImpl(repository: forexPriceRepositoryMock);
   });
 
   group('ForexPriceUsecase Tests', () {

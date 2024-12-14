@@ -3,27 +3,19 @@ import 'dart:convert';
 import 'package:fxtm_trader/src/core/network/network_config.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-abstract class PriceSocketDataSource {
-  /// Connects to the WebSocket server.
-  Future<void> connect();
-
-  /// Subscribes to a specific currency.
+abstract class PriceSocketRemoteDataSource {
+  /// Subscribes to a specific symbol.
   Future<void> subscribeToSymbol(String symbol);
 
   /// A stream of data received from the WebSocket.
   Stream<Map<String, dynamic>> get priceUpdates;
-
-  /// Disconnects from the WebSocket server.
-  void disconnect();
 }
 
-class PriceSocketDataSourceImpl implements PriceSocketDataSource {
-
+class PriceSocketRemoteDataSourceImpl implements PriceSocketRemoteDataSource {
   WebSocketChannel? _channel;
   final _controller = StreamController<Map<String, dynamic>>.broadcast();
   bool _isConnected = false;
 
-  @override
   Future<void> connect() async {
     if (_isConnected) return;
 
@@ -72,7 +64,6 @@ class PriceSocketDataSourceImpl implements PriceSocketDataSource {
   @override
   Stream<Map<String, dynamic>> get priceUpdates => _controller.stream;
 
-  @override
   void disconnect() {
     _channel?.sink.close();
     _isConnected = false;
@@ -81,7 +72,7 @@ class PriceSocketDataSourceImpl implements PriceSocketDataSource {
 
   Uri _buildWebSocketUri() {
     return Uri.parse(NetworkConfig.webSocketUrl)
-              .replace(queryParameters: {'token': NetworkConfig.apiToken});
+        .replace(queryParameters: {'token': NetworkConfig.apiToken});
   }
 
   Map<String, dynamic>? _parseMessage(dynamic message) {

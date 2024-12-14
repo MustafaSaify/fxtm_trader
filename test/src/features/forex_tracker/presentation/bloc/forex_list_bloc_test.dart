@@ -18,24 +18,29 @@ void main() {
   setUp(() {
     forexSymbolsusecaseMock = ForexSymbolsUsecaseMock();
     forexitemDisplayMapperMock = ForexItemDisplayMapperMock();
-    sut = ForexListBloc(forexSymbolsUsecase: forexSymbolsusecaseMock, forexItemDisplayMapper: forexitemDisplayMapperMock);
+    sut = ForexListBloc(
+        forexSymbolsUsecase: forexSymbolsusecaseMock,
+        displayMapper: forexitemDisplayMapperMock);
   });
   group('ForexListScreenBloc Tests', () {
-
     const exchange = 'Test Exchange';
 
     blocTest<ForexListBloc, ForexState>(
       'emits [ForexLoading, ForexLoaded] when LoadForexSymbols succeeds',
-
       build: () {
-        
         when(() => forexSymbolsusecaseMock.getSymbols(exchange: exchange))
-        .thenAnswer((_) async => forexSymbolsDomainModelsMocks);
+            .thenAnswer((_) async => forexSymbolsDomainModelsMocks);
 
-        when(() => forexitemDisplayMapperMock.map(domainModels: forexSymbolsDomainModelsMocks))
-        .thenReturn([
-          const ForexItemDisplayModel(symbol: 'EURUSD', displaySymbol: 'Euro/USD', description:'Euro vs USD'),
-          const ForexItemDisplayModel(symbol: 'GBPUSD', displaySymbol: 'GBP/USD', description: 'GBP vs USD')
+        when(() => forexitemDisplayMapperMock.map(
+            domainModels: forexSymbolsDomainModelsMocks)).thenReturn([
+          const ForexItemDisplayModel(
+              symbol: 'EURUSD',
+              displaySymbol: 'Euro/USD',
+              description: 'Euro vs USD'),
+          const ForexItemDisplayModel(
+              symbol: 'GBPUSD',
+              displaySymbol: 'GBP/USD',
+              description: 'GBP vs USD')
         ]);
 
         return sut;
@@ -45,14 +50,22 @@ void main() {
         ForexLoading(),
         ForexLoaded(
           displayItems: const [
-            ForexItemDisplayModel(symbol: 'EURUSD', displaySymbol: 'Euro/USD', description:'Euro vs USD'),
-            ForexItemDisplayModel(symbol: 'GBPUSD', displaySymbol: 'GBP/USD', description: 'GBP vs USD')
+            ForexItemDisplayModel(
+                symbol: 'EURUSD',
+                displaySymbol: 'Euro/USD',
+                description: 'Euro vs USD'),
+            ForexItemDisplayModel(
+                symbol: 'GBPUSD',
+                displaySymbol: 'GBP/USD',
+                description: 'GBP vs USD')
           ],
         ),
       ],
       verify: (_) {
-        verify(() => forexSymbolsusecaseMock.getSymbols(exchange: exchange)).called(1);
-        verify(() => forexitemDisplayMapperMock.map(domainModels: forexSymbolsDomainModelsMocks)).called(1);
+        verify(() => forexSymbolsusecaseMock.getSymbols(exchange: exchange))
+            .called(1);
+        verify(() => forexitemDisplayMapperMock.map(
+            domainModels: forexSymbolsDomainModelsMocks)).called(1);
       },
     );
 
@@ -70,11 +83,14 @@ void main() {
         ForexError(error: 'Error while fetching symbols'),
       ],
       verify: (_) {
-        verify(() => forexSymbolsusecaseMock.getSymbols(exchange: exchange)).called(1);
+        verify(() => forexSymbolsusecaseMock.getSymbols(exchange: exchange))
+            .called(1);
       },
     );
   });
 }
 
 class ForexSymbolsUsecaseMock extends Mock implements ForexSymbolsUsecase {}
-class ForexItemDisplayMapperMock extends Mock implements ForexItemDisplayMapper {}
+
+class ForexItemDisplayMapperMock extends Mock
+    implements ForexItemDisplayMapper {}

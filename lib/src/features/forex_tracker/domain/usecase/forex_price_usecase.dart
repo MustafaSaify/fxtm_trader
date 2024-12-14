@@ -8,7 +8,7 @@ abstract class ForexPriceUsecase {
 class ForexPriceUsecaseImpl implements ForexPriceUsecase {
   final ForexPriceSocketRepository repository;
 
-  ForexPriceUsecaseImpl(this.repository);
+  ForexPriceUsecaseImpl({required this.repository});
 
   @override
   Stream<ForexPrice?> subscribeToSymbol(String symbol) {

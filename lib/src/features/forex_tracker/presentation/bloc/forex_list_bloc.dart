@@ -6,11 +6,11 @@ import 'package:fxtm_trader/src/features/forex_tracker/presentation/mappers/fore
 
 class ForexListBloc extends Bloc<ForexEvent, ForexState> {
   final ForexSymbolsUsecase forexSymbolsUsecase;
-  final ForexItemDisplayMapper forexItemDisplayMapper;
+  final ForexItemDisplayMapper displayMapper;
 
   ForexListBloc({
     required this.forexSymbolsUsecase,
-    required this.forexItemDisplayMapper,
+    required this.displayMapper,
   }) : super(ForexLoading()) {
     on<LoadForexSymbols>(_handleLoadForexEvent);
   }
@@ -21,8 +21,9 @@ class ForexListBloc extends Bloc<ForexEvent, ForexState> {
   ) async {
     emit(ForexLoading());
     try {
-      var forexSymbols = await forexSymbolsUsecase.getSymbols(exchange: event.exchange);
-      var displayModels = forexItemDisplayMapper.map(domainModels: forexSymbols);
+      var forexSymbols =
+          await forexSymbolsUsecase.getSymbols(exchange: event.exchange);
+      var displayModels = displayMapper.map(domainModels: forexSymbols);
       emit(ForexLoaded(displayItems: displayModels));
     } catch (e) {
       emit(ForexError(error: 'Error while fetching symbols'));

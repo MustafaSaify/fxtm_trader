@@ -59,7 +59,7 @@ class _ForexPriceWidgetState extends State<ForexPriceWidget> {
     else {
       return Text(
         key: state is PriceLoading ? ForexPriceWidgetKeys.loading : ForexPriceWidgetKeys.error,
-        state is PriceLoading ? 'Loading..' : 'Error!!',
+        state is PriceLoading ? '--' : 'Error!!',
         style: const TextStyle(
           fontSize: Dimens.large,
           fontWeight: FontWeight.bold,

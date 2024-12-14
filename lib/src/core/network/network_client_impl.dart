@@ -28,7 +28,7 @@ class NetworkClientImpl implements NetworkClient {
       NetworkResponse<T> apiResponse;
       try {
         var response = await _client.get(
-          path, //'https://finnhub.io/api/v1/forex/symbol?exchange=oanda&token=cta05lhr01quh43ovsmgcta05lhr01quh43ovsn0',
+          path,
           queryParameters: queryParameters,
         );
         print(response);
