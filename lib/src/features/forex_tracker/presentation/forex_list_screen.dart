@@ -13,12 +13,12 @@ class ForexListScreen extends StatefulWidget {
 }
 
 class _ForexListScreenState extends State<ForexListScreen> {
-  late ForexListScreenBloc _bloc;
+  late ForexListBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.read<ForexListScreenBloc>();
+    _bloc = context.read<ForexListBloc>();
     _dispatch(LoadForexSymbols(exchange: _Constants.defaultExchange));
   }
 
@@ -30,7 +30,7 @@ class _ForexListScreenState extends State<ForexListScreen> {
       appBar: AppBar(
         title: const Text('Forex'),
       ),
-      body: BlocBuilder<ForexListScreenBloc, ForexState>(
+      body: BlocBuilder<ForexListBloc, ForexState>(
         bloc: _bloc,
         builder: _onStateChangeBuilder,
       ),
@@ -48,9 +48,11 @@ class _ForexListScreenState extends State<ForexListScreen> {
     if (state is ForexLoading) {
       return const _ForexListLoadingWidget(key: ForexListKeys.loading);
     } else if (state is ForexLoaded) {
-      return ForexListContentWidget(key: ForexListKeys.loaded, displayItems: state.displayItems);
+      return ForexListContentWidget(
+          key: ForexListKeys.loaded, displayItems: state.displayItems);
     } else if (state is ForexError) {
-      return _ForexListErrorWidget(key: ForexListKeys.error, error: state.error);
+      return _ForexListErrorWidget(
+          key: ForexListKeys.error, error: state.error);
     }
     return const _ForexListErrorWidget(key: ForexListKeys.error);
   }
@@ -63,17 +65,15 @@ class _ForexListLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator()
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }
 
 class _ForexListErrorWidget extends StatelessWidget {
-
   final String error;
 
-  const _ForexListErrorWidget({required super.key, this.error = _Constants.defaultErrorMessage});
+  const _ForexListErrorWidget(
+      {required super.key, this.error = _Constants.defaultErrorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +88,7 @@ abstract class _Constants {
   static const defaultExchange = 'oanda';
   static const defaultErrorMessage = 'Error while fetching symbols.';
 }
+
 abstract class ForexListKeys {
   static const loading = Key('forex_loading_key');
   static const loaded = Key('forex_loaded_key');

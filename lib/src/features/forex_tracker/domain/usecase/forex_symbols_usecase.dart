@@ -5,7 +5,7 @@ abstract class ForexSymbolsUsecase {
   Future<List<ForexSymbol>> getSymbols({required String exchange});
 }
 
-class ForexSymbolsUsecaseImpl extends ForexSymbolsUsecase {
+class ForexSymbolsUsecaseImpl implements ForexSymbolsUsecase {
 
   final ForexSymbolsRepository _symbolsRepository;
 

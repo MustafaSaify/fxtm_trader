@@ -18,7 +18,8 @@ final getIt = GetIt.instance;
 
 void setupForex() {
   getIt.registerSingleton<Dio>(Dio());
-  getIt.registerLazySingleton<PriceSocketDataSource>(() => PriceSocketDataSourceImpl());
+  getIt.registerLazySingleton<PriceSocketDataSource>(
+      () => PriceSocketDataSourceImpl());
   getIt.registerFactory<ForexPriceSocketRepository>(
       () => ForexPriceSocketRepositoryImpl(getIt()));
   getIt
@@ -27,11 +28,10 @@ void setupForex() {
 }
 
 class ForexListProvider {
-  ForexListScreenBloc initForexListBloc() {
-    return ForexListScreenBloc(
-      forexSymbolsUsecase: _getForexSymbolsUsecase(),
-      forexItemDisplayMapper: _getForexDisplayMapper()
-    );
+  ForexListBloc initForexListBloc() {
+    return ForexListBloc(
+        forexSymbolsUsecase: _getForexSymbolsUsecase(),
+        forexItemDisplayMapper: _getForexDisplayMapper());
   }
 
   ForexSymbolsUsecase _getForexSymbolsUsecase() {

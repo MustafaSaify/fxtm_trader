@@ -1,7 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-@JsonSerializable()
-class ForexSymbolModel {
+class ForexSymbolModel extends Equatable {
   final String description;
   final String displaySymbol;
   final String symbol;
@@ -18,4 +17,9 @@ class ForexSymbolModel {
       symbol: json['symbol'],
     );
   }
+  
+  @override
+  List<Object?> get props => [
+    symbol, displaySymbol, description
+  ];
 }

@@ -7,7 +7,7 @@ abstract class ForexItemDisplayMapper {
   });
 }
 
-class ForexItemDisplayMapperImpl extends ForexItemDisplayMapper {
+class ForexItemDisplayMapperImpl implements ForexItemDisplayMapper {
   @override
   List<ForexItemDisplayModel> map({
     required List<ForexSymbol> domainModels,

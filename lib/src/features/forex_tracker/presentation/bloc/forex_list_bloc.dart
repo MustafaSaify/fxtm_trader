@@ -4,11 +4,11 @@ import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_e
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_state.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/mappers/forex_item_display_mapper.dart';
 
-class ForexListScreenBloc extends Bloc<ForexEvent, ForexState> {
+class ForexListBloc extends Bloc<ForexEvent, ForexState> {
   final ForexSymbolsUsecase forexSymbolsUsecase;
   final ForexItemDisplayMapper forexItemDisplayMapper;
 
-  ForexListScreenBloc({
+  ForexListBloc({
     required this.forexSymbolsUsecase,
     required this.forexItemDisplayMapper,
   }) : super(ForexLoading()) {

@@ -2,13 +2,13 @@ import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_sym
 
 List<ForexSymbol> mockedForexSymbols = [
     const ForexSymbol(
-      symbol: 'BINANCE:BADGERBUSD',
-      displaySymbol: 'BADGER/BUSD',
-      description: 'Binance BADGER/BUSD'
+      symbol: 'EURUSD',
+      description: 'Euro vs US Dollar',
+      displaySymbol: 'EURUSD',
     ),
     const ForexSymbol(
-      symbol: 'BINANCE:CVCBUSD',
-      displaySymbol: 'CVC/BUSD',
-      description: 'Binance CVC/BUSD'
+      symbol: 'GBPUSD',
+      description: 'British Pound vs US Dollar',
+      displaySymbol: 'GBPUSD',
     ),
   ];

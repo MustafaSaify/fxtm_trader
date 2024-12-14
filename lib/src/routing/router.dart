@@ -14,12 +14,14 @@ class Router {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider<ForexListScreenBloc>(
-                create: (BuildContext context) => ForexListProvider().initForexListBloc(),
+              BlocProvider<ForexListBloc>(
+                create: (BuildContext context) =>
+                    ForexListProvider().initForexListBloc(),
               ),
               BlocProvider<ForexPriceBloc>(
-                create: (BuildContext context) => getIt<ForexPriceBloc>() //ForexPriceProvider().initForexPriceBloc(),
-              ),
+                  create: (BuildContext context) => getIt<
+                      ForexPriceBloc>() //ForexPriceProvider().initForexPriceBloc(),
+                  ),
             ],
             child: const ForexListScreen(),
           ),
@@ -27,18 +29,18 @@ class Router {
       case forexList:
         setupForex();
         return MaterialPageRoute(
-          builder: (_) => BlocProvider<ForexListScreenBloc>(
-            create: (BuildContext context) => ForexListProvider().initForexListBloc(),
-            child: const ForexListScreen(),
-          )
-        );
+            builder: (_) => BlocProvider<ForexListBloc>(
+                  create: (BuildContext context) =>
+                      ForexListProvider().initForexListBloc(),
+                  child: const ForexListScreen(),
+                ));
 
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
-          )
-        );
+            builder: (_) => Scaffold(
+                  body: Center(
+                      child: Text('No route defined for ${settings.name}')),
+                ));
     }
   }
 }
