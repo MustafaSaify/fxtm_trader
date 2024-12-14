@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class ForexPriceState extends Equatable {}
 
-class PriceLoading implements ForexPriceState {
+class PriceLoading extends ForexPriceState {
   @override
   List<Object?> get props => [];
 
@@ -10,7 +10,7 @@ class PriceLoading implements ForexPriceState {
   bool? get stringify => false;
 }
 
-class PriceLoaded implements ForexPriceState {
+class PriceLoaded extends ForexPriceState {
   final String price;
 
   PriceLoaded({required this.price});
@@ -22,7 +22,7 @@ class PriceLoaded implements ForexPriceState {
   bool? get stringify => false;
 }
 
-class PriceError implements ForexPriceState {
+class PriceError extends ForexPriceState {
   final String? error;
 
   PriceError(this.error);

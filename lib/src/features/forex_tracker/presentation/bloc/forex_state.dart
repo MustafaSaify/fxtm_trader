@@ -3,7 +3,7 @@ import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex
 
 abstract class ForexState extends Equatable {}
 
-class ForexLoading implements ForexState {
+class ForexLoading extends ForexState {
   @override
   List<Object?> get props => [];
 
@@ -11,7 +11,7 @@ class ForexLoading implements ForexState {
   bool? get stringify => false;
 }
 
-class ForexLoaded implements ForexState {
+class ForexLoaded extends ForexState {
   final List<ForexItemDisplayModel> displayItems;
 
   ForexLoaded({required this.displayItems});
@@ -23,7 +23,7 @@ class ForexLoaded implements ForexState {
   bool? get stringify => false;
 }
 
-class ForexError implements ForexState {
+class ForexError extends ForexState {
   final String error;
 
   ForexError({required this.error});
