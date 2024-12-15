@@ -18,7 +18,7 @@ class ForexPriceBloc extends Bloc<ForexPriceEvent, ForexPriceState> {
     try {
       await for (final forexPrice in forexPriceUsecase.subscribeToSymbol(event.symbol)) {
         if (forexPrice != null && forexPrice.symbol == event.symbol) {
-          emit(PriceLoaded(price: '\$${forexPrice.price.toStringAsFixed(4)}'));
+          emit(PriceLoaded(price: forexPrice.price.toStringAsFixed(4)));
         }
       }
     } catch (error) {
