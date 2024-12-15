@@ -31,6 +31,8 @@ dependencies:
   get_it: ^8.0.2
   flutter_dotenv: ^5.2.1
   chopper: ^8.0.3
+  fl_chart: ^0.69.2
+  interactive_chart: ^0.3.5
 
 dev_dependencies:
 
@@ -50,3 +52,4 @@ flutter:
   uses-material-design: true
   assets:
      - .env
+     - assets/candle_data.json

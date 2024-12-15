@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fxtm_trader/src/core/theme/dimens.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/di/forex_provider.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/di/forex_dependencies.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/forex_price_widget.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex_item_display_model.dart';
+import 'package:fxtm_trader/src/routing/routes.dart';
 
 class ForexListContentWidget extends StatelessWidget{
 
@@ -46,7 +47,8 @@ class _ForexListItem extends StatelessWidget {
       trailing: SizedBox(
         width: _Constants.priceWidgetWidth,
         child: ForexPriceWidget(key: Key('forex_price_${item.symbol}'), symbol: item.symbol),
-      ) 
+      ),
+      onTap: () => Navigator.pushNamed(context, forexHistory, arguments: item.symbol), 
     );
   }  
 }
