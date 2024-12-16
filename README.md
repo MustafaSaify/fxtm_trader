@@ -76,15 +76,10 @@ The project follows the **Clean Architecture** principles, ensuring a separation
 
 Create a .env file at the root of the project and add below variables
 
-API_HOST="https://finnhub.io/api/v1"
+```API_HOST="https://finnhub.io/api/v1"
 API_KEY="your_finnhub_api_key_here"
 WEBSOCKET_URL="wss://ws.finnhub.io"
-
-
-env
-Copy code
-FINNHUB_API_KEY=your_finnhub_api_key_here
-   ```
+```
 
 4. Run the application:
    ```bash
