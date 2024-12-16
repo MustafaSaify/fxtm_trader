@@ -78,7 +78,6 @@ class _ForexListErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      key: key,
       child: Text(error),
     );
   }
