@@ -8,8 +8,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_list_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_state.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_event.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/forex_list_content_widget.dart';
 
 class MockForexListBloc extends Mock implements ForexListBloc {}
 
