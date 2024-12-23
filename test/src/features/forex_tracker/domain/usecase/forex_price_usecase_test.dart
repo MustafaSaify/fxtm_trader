@@ -3,59 +3,41 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_price.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/price_stream_repository.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/forex_price_usecase.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/get_forex_prices_usecase.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'mock_data/forex_price_usecase_mocks.dart';
+
 void main() {
-  late ForexPriceUsecase sut;
+  late GetForexPricesUsecase sut;
   late ForexPriceSocketRepository forexPriceRepositoryMock;
 
   setUp(() {
     forexPriceRepositoryMock = ForexPriceSocketRepositoryMock();
-    sut = ForexPriceUsecaseImpl(repository: forexPriceRepositoryMock);
+    sut = GetForexPricesUsecaseImpl(repository: forexPriceRepositoryMock);
   });
 
   group('ForexPriceUsecase Tests', () {
-
     test('subscribeToSymbol should call repository and return a stream', () {
       // Arrange
-      const symbol = 'EURUSD';
-      
-      final mockStream = Stream<ForexPrice?>.fromIterable([
-        ForexPrice(symbol: symbol, price: 1.1),
-        ForexPrice(symbol: symbol, price: 1.2),
-      ]);
+      const symbols = forexSymbolsMocks;
 
-      when(() => forexPriceRepositoryMock.subscribeToSymbol(symbol))
-      .thenAnswer((_) => mockStream);
+      final mockStream =
+          Stream<Map<String, ForexPrice>?>.fromIterable([mockPriceMap]);
+
+      when(() => forexPriceRepositoryMock.subscribeToSymbols(symbols))
+          .thenAnswer((_) => mockStream);
 
       // Act
-      final resultStream = sut.subscribeToSymbol(symbol);
+      final resultStream = sut.call(symbols);
 
       // Assert
-      expect(resultStream, emitsInOrder([
-        ForexPrice(symbol: symbol, price: 1.1),
-        ForexPrice(symbol: symbol, price: 1.2),
-      ]));
-      verify(() => forexPriceRepositoryMock.subscribeToSymbol(symbol)).called(1);
-    });
-
-    test('subscribeToSymbol should handle empty streams', () {
-      // Arrange
-      const symbol = 'GBPUSD';
-      const mockStream = Stream<ForexPrice?>.empty();
-
-      when(() => forexPriceRepositoryMock.subscribeToSymbol(symbol))
-      .thenAnswer((_) => mockStream);
-
-      // Act
-      final resultStream = sut.subscribeToSymbol(symbol);
-
-      // Assert
-      expect(resultStream, emitsDone);
-      verify(() => forexPriceRepositoryMock.subscribeToSymbol(symbol)).called(1);
+      expect(resultStream, emitsInOrder([mockPriceMap]));
+      verify(() => forexPriceRepositoryMock.subscribeToSymbols(symbols))
+          .called(1);
     });
   });
 }
 
-class ForexPriceSocketRepositoryMock extends Mock implements ForexPriceSocketRepository {}
+class ForexPriceSocketRepositoryMock extends Mock
+    implements ForexPriceSocketRepository {}

@@ -8,10 +8,9 @@ import 'package:fxtm_trader/src/features/forex_tracker/data/repository/forex_pri
 import 'package:fxtm_trader/src/features/forex_tracker/data/repository/forex_symbols_repository_impl.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/forex_symbols_repository.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/domain/repository/price_stream_repository.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/forex_price_usecase.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/forex_symbols_usecase.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/get_forex_prices_usecase.dart';
+import 'package:fxtm_trader/src/features/forex_tracker/domain/usecase/get_forex_symbols_usecase.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_list_bloc.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/mappers/forex_item_display_mapper.dart';
 import 'package:get_it/get_it.dart';
 
@@ -34,8 +33,9 @@ void setupForexDependencies() {
           remoteDataSource: getIt<ForexSymbolsRemoteDataSource>()));
 
   // ForexSymbolsUsecase
-  getIt.registerFactory<ForexSymbolsUsecase>(() => ForexSymbolsUsecaseImpl(
-      symbolsRepository: getIt<ForexSymbolsRepository>()));
+  getIt.registerFactory<GetForexSymbolsUsecase>(() =>
+      GetForexSymbolsUsecaseImpl(
+          symbolsRepository: getIt<ForexSymbolsRepository>()));
 
   // ForexItesDisplayMapper
   getIt.registerFactory<ForexItemDisplayMapper>(
@@ -43,8 +43,8 @@ void setupForexDependencies() {
 
   // ForexListBloc
   getIt.registerFactory<ForexListBloc>(() => ForexListBloc(
-      forexSymbolsUsecase: getIt<ForexSymbolsUsecase>(),
-      forexPriceUsecase: getIt<ForexPriceUsecase>(),
+      getForexSymbolsUsecase: getIt<GetForexSymbolsUsecase>(),
+      getForexPriceUsecase: getIt<GetForexPricesUsecase>(),
       displayMapper: getIt<ForexItemDisplayMapper>()));
 
   // PriceSocketRemoteDataSource - Singleton
@@ -61,10 +61,6 @@ void setupForexDependencies() {
           priceLocalDataSource: getIt<PriceLocalDataSource>()));
 
   // ForexPriceUsecase
-  getIt.registerFactory<ForexPriceUsecase>(() =>
-      ForexPriceUsecaseImpl(repository: getIt<ForexPriceSocketRepository>()));
-
-  // ForexPriceBloc
-  getIt.registerFactory<ForexPriceBloc>(
-      () => ForexPriceBloc(forexPriceUsecase: getIt<ForexPriceUsecase>()));
+  getIt.registerFactory<GetForexPricesUsecase>(() => GetForexPricesUsecaseImpl(
+      repository: getIt<ForexPriceSocketRepository>()));
 }

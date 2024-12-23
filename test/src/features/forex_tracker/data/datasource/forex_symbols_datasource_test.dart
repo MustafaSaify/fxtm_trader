@@ -17,7 +17,7 @@ void main() {
 
   group('Test ForexSymbolsDataSourceImpl', () {
     test('Get Symbols - Success case', () async {
-      // given
+      // Arrange
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbolsDtos;
       when(
@@ -29,15 +29,15 @@ void main() {
         async => NetworkResponse(data: mockedForexSymbolsDtos)
       );
 
-      // when
+      // Act
       final result = await sut.getSymbols(exchange: exchange);
 
-      // then
+      // Assert
       expect(result, equals(expectedSymbols));
     });
 
     test('Get Symbols - Failure case', () async {
-      // given
+      // Arrange
       const exchange = 'forex';
       var expectedSymbols = [];
       when(
@@ -49,10 +49,10 @@ void main() {
         async => NetworkResponse(data: null, statusCode: '500', success: false)
       );
 
-      // when
+      // Act
       final result = await sut.getSymbols(exchange: exchange);
 
-      // then
+      // Assert
       expect(result, equals(expectedSymbols));
     });
   });

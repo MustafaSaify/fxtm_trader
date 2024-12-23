@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/forex_list_screen.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex_item_display_model.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_list_bloc.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/bloc/forex_state.dart';
@@ -17,12 +15,6 @@ void main() {
   setUp(() {
     mockBloc = MockForexListBloc();
     when(() => mockBloc.close()).thenAnswer((_) async {});
-
-    final sl = GetIt.I;
-    // Reset any previous registrations
-    sl.reset();
-    // Register the ForexPriceBloc mock or instance
-    sl.registerFactory<ForexPriceBloc>(() => MockForexPriceBloc());
   });
 
   Future<void> pumpForexListScreen(WidgetTester tester) async {
@@ -55,11 +47,13 @@ void main() {
         symbol: 'EUR/USD',
         displaySymbol: 'EUR/USD',
         description: 'Euro to US Dollar',
+        price: '1.1'
       ),
       const ForexItemDisplayModel(
         symbol: 'USD/JPY',
         displaySymbol: 'USD/JPY',
         description: 'US Dollar to Japanese Yen',
+        price: '1.2'
       ),
     ];
     // Mock the ForexLoaded state with display items
@@ -95,5 +89,3 @@ void main() {
     expect(find.text(errorMessage), findsOneWidget);
   });
 }
-
-class MockForexPriceBloc extends Mock implements ForexPriceBloc {}
