@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fxtm_trader/src/core/theme/dimens.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/di/forex_dependencies.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/bloc/forex_price_bloc.dart';
-import 'package:fxtm_trader/src/features/forex_tracker/presentation/components/price_widget/forex_price_widget.dart';
 import 'package:fxtm_trader/src/features/forex_tracker/presentation/models/forex_item_display_model.dart';
 import 'package:fxtm_trader/src/routing/routes.dart';
 
@@ -17,9 +13,9 @@ class ForexListContentWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: displayItems.length,
-      itemBuilder: (context, index) => BlocProvider<ForexPriceBloc>(
-        create: (context) => getIt<ForexPriceBloc>(),
-        child: _ForexListItem(key: Key('forex_list_item_$index'), item: displayItems[index]),
+      itemBuilder: (context, index) => _ForexListItem(
+        key: Key('forex_list_item_$index'), 
+        item: displayItems[index]
       ),
     );
   }
@@ -46,7 +42,11 @@ class _ForexListItem extends StatelessWidget {
       ),
       trailing: SizedBox(
         width: _Constants.priceWidgetWidth,
-        child: ForexPriceWidget(key: Key('forex_price_${item.symbol}'), symbol: item.symbol),
+        child: Text(
+          item.price,
+          style: const TextStyle(fontSize: Dimens.large),
+          textAlign: TextAlign.right,
+        ),
       ),
       onTap: () => Navigator.pushNamed(context, forexHistory, arguments: item.symbol), 
     );

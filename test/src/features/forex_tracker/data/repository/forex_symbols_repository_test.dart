@@ -18,7 +18,7 @@ void main() {
 
   group('Test forex_symbols_repository - Happy Cases', () {
     test('Get Symbols - Success case', () async {
-      // given
+      // Arrange
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbols;
       when(
@@ -27,17 +27,17 @@ void main() {
         async => mockedForexSymbolsDtos
       );
 
-      // when
+      // Act
       final result = await sut.getSymbols(exchange);
 
-      // then
+      // Assert
       expect(result, equals(expectedSymbols));
     });
   });
 
   group('Test forex_symbols_repository - Error Cases', () {
     test('Get Symbols - Failure case', () async {
-      // given
+      // Arrange
       const exchange = 'forex';
       var expectedSymbols = mockedForexSymbols;
       when(
@@ -46,10 +46,10 @@ void main() {
         async => mockedForexSymbolsDtos
       );
 
-      // when
+      // Act
       final result = await sut.getSymbols(exchange);
 
-      // then
+      // Assert
       expect(result, equals(expectedSymbols));
     });
 
