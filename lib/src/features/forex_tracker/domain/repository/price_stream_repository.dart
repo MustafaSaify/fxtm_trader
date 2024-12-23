@@ -2,4 +2,5 @@ import 'package:fxtm_trader/src/features/forex_tracker/domain/entities/forex_pri
 
 abstract class ForexPriceSocketRepository {
   Stream<ForexPrice?> subscribeToSymbol(String symbol);
+  Stream<List<ForexPrice>?> subscribeToSymbols(List<String> symbols);
 }

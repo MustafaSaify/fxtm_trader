@@ -44,6 +44,7 @@ void setupForexDependencies() {
   // ForexListBloc
   getIt.registerFactory<ForexListBloc>(() => ForexListBloc(
       forexSymbolsUsecase: getIt<ForexSymbolsUsecase>(),
+      forexPriceUsecase: getIt<ForexPriceUsecase>(),
       displayMapper: getIt<ForexItemDisplayMapper>()));
 
   // PriceSocketRemoteDataSource - Singleton

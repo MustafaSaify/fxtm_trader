@@ -17,10 +17,11 @@ class ForexListContentWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: displayItems.length,
-      itemBuilder: (context, index) => BlocProvider<ForexPriceBloc>(
-        create: (context) => getIt<ForexPriceBloc>(),
-        child: _ForexListItem(key: Key('forex_list_item_$index'), item: displayItems[index]),
-      ),
+      itemBuilder: (context, index) => _ForexListItem(key: Key('forex_list_item_$index'), item: displayItems[index]),
+      // itemBuilder: (context, index) => BlocProvider<ForexPriceBloc>(
+      //   create: (context) => getIt<ForexPriceBloc>(),
+      //   child: _ForexListItem(key: Key('forex_list_item_$index'), item: displayItems[index]),
+      // ),
     );
   }
 }
@@ -46,7 +47,10 @@ class _ForexListItem extends StatelessWidget {
       ),
       trailing: SizedBox(
         width: _Constants.priceWidgetWidth,
-        child: ForexPriceWidget(key: Key('forex_price_${item.symbol}'), symbol: item.symbol),
+        child: Text(
+          item.price,
+          style: const TextStyle(fontSize: Dimens.large),
+        ),//ForexPriceWidget(key: Key('forex_price_${item.symbol}'), symbol: item.symbol),
       ),
       onTap: () => Navigator.pushNamed(context, forexHistory, arguments: item.symbol), 
     );
